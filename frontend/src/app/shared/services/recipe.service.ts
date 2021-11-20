@@ -24,4 +24,14 @@ export class RecipeService {
   getFav(id: number): Observable<any> {
     return this.http.get(`http://127.0.0.1:8000/api/auth/favorites/${id}`);
   }
+
+  //recuperamos las puntuaciones de las recetas
+  getRatings(id: number): Observable<any> {
+    return this.http.get(`http://127.0.0.1:8000/api/auth/ratings/${id}`);
+  }
+
+  //recuperamos las recetas mas puntuadas
+  getMasPuntuadas(id: number): Observable<any> {
+    return this.http.get(`http://127.0.0.1:8000/api/auth/more-ratings/`);
+  }
 }

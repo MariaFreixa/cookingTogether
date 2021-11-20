@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -22,6 +23,7 @@ import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
 import { CocinaComponent } from './components/cocina/cocina.component';
 import { RecetaComponent } from './components/receta/receta.component';
+import { MasPuntuadasComponent } from './components/home/mas-puntuadas/mas-puntuadas.component';
 
 
 @NgModule({
@@ -37,7 +39,8 @@ import { RecetaComponent } from './components/receta/receta.component';
     BusquedaComponent,
     CategoriaComponent,
     CocinaComponent,
-    RecetaComponent
+    RecetaComponent,
+    MasPuntuadasComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { RecetaComponent } from './components/receta/receta.component';
     FormsModule,
     BrowserAnimationsModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    NgbModule
   ],
   providers: [
     {

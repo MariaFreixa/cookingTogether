@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Recipe } from 'src/app/shared/models/recipe.model';
 import { AuthStateService } from 'src/app/shared/services/auth-state.service';
+import { RecipeService } from 'src/app/shared/services/recipe.service';
 import { TokenService } from 'src/app/shared/services/token.service';
-import { Recipe } from '../../../shared/models/recipe.model';
-import { RecipeService } from '../../../shared/services/recipe.service';
 
 @Component({
-  selector: 'app-ultimas-recetas',
-  templateUrl: './ultimas-recetas.component.html',
-  styleUrls: ['./ultimas-recetas.component.scss']
+  selector: 'app-mas-puntuadas',
+  templateUrl: './mas-puntuadas.component.html',
+  styleUrls: ['./mas-puntuadas.component.scss']
 })
-export class UltimasRecetasComponent implements OnInit {
+
+export class MasPuntuadasComponent implements OnInit {
   public recipes: Recipe[] = [];
   public isSignedIn: boolean = false;
   public user: any;
@@ -45,7 +46,7 @@ export class UltimasRecetasComponent implements OnInit {
     if(this.isSignedIn) {
       this.user = JSON.parse(this.token.getUser());
       this.recipeService.getFav(this.user.id).subscribe((recipesFav) => {
-         recipesFav.forEach((recipeFav) => {
+          recipesFav.forEach((recipeFav) => {
           this.recipes.forEach((recipe) => {
             if(recipe.id == recipeFav.id) {
               recipe.userFavorite = true;

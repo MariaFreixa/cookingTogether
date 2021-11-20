@@ -11,4 +11,5 @@ export class Recipe {
     category: Category;
     complexity: Complexity;
     userFavorite: boolean;
+    rating: number;
 }
