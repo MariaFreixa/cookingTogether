@@ -30,7 +30,7 @@ export class MasPuntuadasComponent implements OnInit {
   }
 
   getData() {
-    this.recipeService.getLatestRecipes().subscribe((recipes) => {
+    this.recipeService.getMoreRated().subscribe((recipes) => {
       recipes.forEach(element => {
         let objectURL = 'data:image/jpeg;base64,' + element.main_image;
         element.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
@@ -40,7 +40,7 @@ export class MasPuntuadasComponent implements OnInit {
       });
       this.recipes = recipes;
       
-      console.log("last recipes: ", recipes);
+      console.log("most rated: ", recipes);
     });
 
     if(this.isSignedIn) {

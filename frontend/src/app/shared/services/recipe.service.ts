@@ -31,7 +31,7 @@ export class RecipeService {
   }
 
   //recuperamos las recetas mas puntuadas
-  getMasPuntuadas(id: number): Observable<any> {
-    return this.http.get(`http://127.0.0.1:8000/api/auth/more-ratings/`);
+  getMoreRated(): Observable<any> {
+    return this.http.get(`http://127.0.0.1:8000/api/auth/more-rated/`);
   }
 }
