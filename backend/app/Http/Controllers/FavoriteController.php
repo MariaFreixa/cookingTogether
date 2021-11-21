@@ -34,8 +34,6 @@ class FavoriteController extends Controller {
         })
         ->get(array('recipes.*'));  
 
-        
-
         foreach ($recipes as $recipe) {
             $base64 = base64_encode($recipe->main_image);
             $recipe->main_image = $base64;

@@ -34,4 +34,8 @@ export class RecipeService {
   getMoreRated(): Observable<any> {
     return this.http.get(`http://127.0.0.1:8000/api/auth/more-rated/`);
   }
+
+  getRecipesByCategory(id: number):Observable<any> {
+    return this.http.get(`http://127.0.0.1:8000/api/auth/recipes-category/${id}`);
+  }
 }

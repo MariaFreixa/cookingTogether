@@ -1,7 +1,11 @@
 .recetas {
     display: flex;
     justify-content: center;
-    margin-top: 5rem;
+}
+
+.title {
+    text-align: center;
+    margin-top: 80px;
 }
 
 mat-card {

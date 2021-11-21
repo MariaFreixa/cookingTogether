@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Recipe;
 
 
@@ -13,7 +14,7 @@ class RecipeController extends Controller {
      * @return void
      */
     public function __construct() {
-    $this->middleware('auth:api', ['except' => ['getRecipeById', 'getLatest']]);
+    $this->middleware('auth:api', ['except' => ['getRecipeById', 'getLatest', 'getRecipesByCategory']]);
     }
 
     /**
@@ -36,10 +37,23 @@ class RecipeController extends Controller {
      */
     public function getLatest() {
         $recipes = Recipe::latest()->take(5)->get();
+
         foreach ($recipes as $recipe) {
             $base64 = base64_encode($recipe->main_image);
             $recipe->main_image = $base64;
         }
+
+        return $recipes;
+    }
+
+    public function getRecipesByCategory(Request $request) {
+        $recipes = DB::table('recipes')->where('id_cateogry', '=', $request->id)->get();
+
+        foreach ($recipes as $recipe) {
+            $base64 = base64_encode($recipe->main_image);
+            $recipe->main_image = $base64;
+        }
+
         return $recipes;
     }
 }

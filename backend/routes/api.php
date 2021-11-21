@@ -28,6 +28,7 @@ Route::group([
     //recetas
     Route::get('recipe/{id}', 'RecipeController@getRecipeById'); //cogemos la receta por id
     Route::get('latest', 'RecipeController@getLatest'); //cogemos las ultimas recetas 
+    Route::get('recipes-category/{id}', 'RecipeController@getRecipesByCategory'); //cogemos las recetas de X categoria
     //favorites
     Route::get('favorites/{id}', 'FavoriteController@getFav'); //cogemos las recetas favoritas de X usuario
     //ratings
