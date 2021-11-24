@@ -21,8 +21,8 @@ export class RecipeService {
   }
 
   //recuperamos las recetas favoritas del usuario
-  getFav(id: number): Observable<any> {
-    return this.http.get(`http://127.0.0.1:8000/api/auth/favorites/${id}`);
+  getFav(): Observable<any> {
+    return this.http.get(`http://127.0.0.1:8000/api/auth/favorites/`);
   }
 
   //recuperamos las puntuaciones de las recetas
@@ -37,5 +37,13 @@ export class RecipeService {
 
   getRecipesByCategory(id: number):Observable<any> {
     return this.http.get(`http://127.0.0.1:8000/api/auth/recipes-category/${id}`);
+  }
+
+  getMyRecipes():Observable<any> {
+    return this.http.get(`http://127.0.0.1:8000/api/auth/my-recipes/`);
+  }
+
+  newRecipe(recipe: any):Observable<any> {
+    return this.http.post(`http://127.0.0.1:8000/api/auth/new-recipe/`, recipe);
   }
 }

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use File;
+use Validator;
+use App\User;
 use App\Recipe;
 
 
@@ -48,6 +52,18 @@ class RecipeController extends Controller {
 
     public function getRecipesByCategory(Request $request) {
         $recipes = DB::table('recipes')->where('id_cateogry', '=', $request->id)->get();
+
+        foreach ($recipes as $recipe) {
+            $base64 = base64_encode($recipe->main_image);
+            $recipe->main_image = $base64;
+        }
+
+        return $recipes;
+    }
+
+    public function getMyRecipes(Request $request) {
+        $user = auth()->user();
+        $recipes = DB::table('recipes')->where('id_user', '=', $user->id)->get();
 
         foreach ($recipes as $recipe) {
             $base64 = base64_encode($recipe->main_image);

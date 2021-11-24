@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Favorite;
 use App\User;
@@ -15,7 +16,7 @@ class FavoriteController extends Controller {
      * @return void
      */
     public function __construct() {
-    $this->middleware('auth:api', ['except' => ['getFav']]);
+    $this->middleware('auth:api', ['except' => []]);
     }
 
     /**
@@ -24,15 +25,13 @@ class FavoriteController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function getFav(Request $request) {
-        $userId = $request->id;
+        $user = auth()->user();
 
         $recipes = DB::table('users')
         ->join('favorites', 'favorites.id_user', '=', 'users.id')
-        ->join('recipes', function ($join) {
-            $join->on('recipes.id_user', '=', 'users.id')
-                 ->on('recipes.id', '=', 'favorites.id_recipe');
-        })
-        ->get(array('recipes.*'));  
+        ->join('recipes', 'recipes.id_user', '=', 'users.id')
+        ->distinct('recipes.id')
+        ->get(array('recipes.*'));
 
         foreach ($recipes as $recipe) {
             $base64 = base64_encode($recipe->main_image);

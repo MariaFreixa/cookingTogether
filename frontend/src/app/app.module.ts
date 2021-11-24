@@ -19,6 +19,9 @@ import { UltimasRecetasComponent } from './components/home/ultimas-recetas/ultim
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
 import { CocinaComponent } from './components/cocina/cocina.component';
@@ -26,7 +29,7 @@ import { RecetaComponent } from './components/receta/receta.component';
 import { MasPuntuadasComponent } from './components/home/mas-puntuadas/mas-puntuadas.component';
 import { CrearRecetaComponent } from './components/cocina/crear-receta/crear-receta.component';
 import { EditarRecetaComponent } from './components/cocina/editar-receta/editar-receta.component';
-import { RecetasComponent } from './components/cocina/recetas/recetas.component';
+import { MisRecetasComponent } from './components/cocina/mis-recetas/mis-recetas.component';
 
 
 @NgModule({
@@ -46,7 +49,7 @@ import { RecetasComponent } from './components/cocina/recetas/recetas.component'
     MasPuntuadasComponent,
     CrearRecetaComponent,
     EditarRecetaComponent,
-    RecetasComponent
+    MisRecetasComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,10 @@ import { RecetasComponent } from './components/cocina/recetas/recetas.component'
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
-    NgbModule
+    MatTableModule,
+    MatPaginatorModule,
+    NgbModule,
+    MatInputModule
   ],
   providers: [
     {

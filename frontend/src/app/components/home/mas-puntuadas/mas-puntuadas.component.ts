@@ -14,7 +14,6 @@ import { TokenService } from 'src/app/shared/services/token.service';
 export class MasPuntuadasComponent implements OnInit {
   public recipes: Recipe[] = [];
   public isSignedIn: boolean = false;
-  public user: any;
 
   constructor(public recipeService: RecipeService, private sanitizer: DomSanitizer, private authStateService: AuthStateService, private token: TokenService) {}
 
@@ -44,8 +43,7 @@ export class MasPuntuadasComponent implements OnInit {
     });
 
     if(this.isSignedIn) {
-      this.user = JSON.parse(this.token.getUser());
-      this.recipeService.getFav(this.user.id).subscribe((recipesFav) => {
+      this.recipeService.getFav().subscribe((recipesFav) => {
           recipesFav.forEach((recipeFav) => {
           this.recipes.forEach((recipe) => {
             if(recipe.id == recipeFav.id) {

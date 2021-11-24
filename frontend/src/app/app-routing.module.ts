@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
 import { CocinaComponent } from './components/cocina/cocina.component';
+import { CrearRecetaComponent } from './components/cocina/crear-receta/crear-receta.component';
+import { EditarRecetaComponent } from './components/cocina/editar-receta/editar-receta.component';
 import { HomeComponent } from './components/home/home.component';
 import { RecetaComponent } from './components/receta/receta.component';
 
@@ -19,7 +21,9 @@ const routes: Routes = [
   { path: 'busqueda', component: BusquedaComponent },
   { path: 'categoria/:id', component: CategoriaComponent },
   { path: 'cocina', component: CocinaComponent },
-  { path: 'receta/:id', component: RecetaComponent }
+  { path: 'receta/:id', component: RecetaComponent },
+  { path: 'crear-receta', component: CrearRecetaComponent },
+  { path: 'editar-receta/:id', component: EditarRecetaComponent },
 ];
 
 @NgModule({
