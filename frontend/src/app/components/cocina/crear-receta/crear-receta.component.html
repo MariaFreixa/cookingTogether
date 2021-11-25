@@ -7,14 +7,26 @@
         <div *ngIf="errors?.name" class="alert alert-danger mt-3">
           {{ errors?.name }}
         </div>
-        <div *ngIf="errors?.email" class="alert alert-danger mt-3">
-          {{ errors?.email }}
+        <div *ngIf="errors?.main_image" class="alert alert-danger mt-3">
+          {{ errors?.main_image }}
         </div>
-        <div *ngIf="errors?.password" class="alert alert-danger mt-3">
-            {{ errors?.password }}
+        <div *ngIf="errors?.diners" class="alert alert-danger mt-3">
+            {{ errors?.diners }}
         </div>
-        <div *ngIf="errors?.password_confirmation" class="alert alert-danger mt-3">
-            {{ errors?.password_confirmation }}
+        <div *ngIf="errors?.video" class="alert alert-danger mt-3">
+            {{ errors?.video }}
+        </div>
+        <div *ngIf="errors?.id_category" class="alert alert-danger mt-3">
+            {{ errors?.id_category }}
+        </div>
+        <div *ngIf="errors?.id_complexity" class="alert alert-danger mt-3">
+            {{ errors?.id_complexity }}
+        </div>
+        <div *ngIf="errors?.ingredient" class="alert alert-danger mt-3">
+            {{ errors?.ingredient }}
+        </div>
+        <div *ngIf="errors?.steps" class="alert alert-danger mt-3">
+            {{ errors?.steps }}
         </div>
   
         <!-- Registro -->
