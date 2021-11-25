@@ -17,7 +17,6 @@ class CreateIngredientsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_recipe');
             $table->foreign('id_recipe')->references('id')->on('recipes');
-            $table->string('cuantity');
             $table->string('ingredient');
         });
     }

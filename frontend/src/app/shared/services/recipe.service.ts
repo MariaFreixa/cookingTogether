@@ -20,6 +20,11 @@ export class RecipeService {
     return this.http.get(`http://127.0.0.1:8000/api/auth/recipe/${id}`);
   }
 
+  //recueperamos la receta completa por id
+  getFullRecipeById(id: number): Observable<any> {
+    return this.http.get(`http://127.0.0.1:8000/api/auth/full-recipe/${id}`);
+  }
+
   //recuperamos las recetas favoritas del usuario
   getFav(): Observable<any> {
     return this.http.get(`http://127.0.0.1:8000/api/auth/favorites/`);
@@ -44,6 +49,7 @@ export class RecipeService {
   }
 
   newRecipe(recipe: any):Observable<any> {
+    console.log("service recipe: ",recipe);
     return this.http.post(`http://127.0.0.1:8000/api/auth/new-recipe/`, recipe);
   }
 }

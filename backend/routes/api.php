@@ -30,12 +30,14 @@ Route::group([
     Route::get('latest', 'RecipeController@getLatest'); //cogemos las ultimas recetas 
     Route::get('recipes-category/{id}', 'RecipeController@getRecipesByCategory'); //cogemos las recetas de X categoria
     Route::get('my-recipes', 'RecipeController@getMyRecipes'); //cogemos las recetas creadas por el usuario X
+    Route::post('new-recipe', 'RecipeController@newRecipe'); //insertamos una nueva receta
     //favorites
     Route::get('favorites', 'FavoriteController@getFav'); //cogemos las recetas favoritas de X usuario
     //ratings
     Route::get('ratings/{id}', 'RatingController@getRating'); //cogemos las puntuaciones de las recetas
     Route::get('more-rated', 'RatingController@getMoreRated'); //cogemos las recetas más puntuadas
-    
+    //complexities
+    Route::get('complexity', 'ComplexityController@getAllComplexity'); //cogemos todas las complejidades
 });
 
 

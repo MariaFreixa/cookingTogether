@@ -22,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
 import { CocinaComponent } from './components/cocina/cocina.component';
@@ -63,7 +64,8 @@ import { MisRecetasComponent } from './components/cocina/mis-recetas/mis-recetas
     MatTableModule,
     MatPaginatorModule,
     NgbModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule
   ],
   providers: [
     {
