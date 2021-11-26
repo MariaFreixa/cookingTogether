@@ -40,21 +40,37 @@ export class RecipeService {
     return this.http.get(`http://127.0.0.1:8000/api/auth/more-rated/`);
   }
 
+  //recuperamos las recetas por categoria
   getRecipesByCategory(id: number):Observable<any> {
     return this.http.get(`http://127.0.0.1:8000/api/auth/recipes-category/${id}`);
   }
 
+  //recuperamos las recetas del usuario
   getMyRecipes():Observable<any> {
     return this.http.get(`http://127.0.0.1:8000/api/auth/my-recipes/`);
   }
 
+  //creamos receta nueva
   newRecipe(recipe: any):Observable<any> {
-    console.log("service recipe: ",recipe);
     return this.http.post(`http://127.0.0.1:8000/api/auth/new-recipe/`, recipe);
   }
 
+  //actualizamos la receta
   updateRecipe(recipe: any):Observable<any> {
-    console.log("service recipe: ",recipe);
     return this.http.post(`http://127.0.0.1:8000/api/auth/update-recipe/`, recipe);
+  }
+
+  //añadimos receta a favoritos del usuario
+  setFavorite(id: any):Observable<any> {
+    return this.http.get(`http://127.0.0.1:8000/api/auth/favorite-recipe/${id}`);
+  }
+
+  //quitamos la receta de favoritos del usuario
+  removeFavorite(id: any):Observable<any> {
+    return this.http.get(`http://127.0.0.1:8000/api/auth/remove-favorite-recipe/${id}`);
+  }
+
+  setRating(recipe: any):Observable<any> {
+    return this.http.post(`http://127.0.0.1:8000/api/auth/set-rating/`, recipe);
   }
 }

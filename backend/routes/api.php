@@ -35,9 +35,12 @@ Route::group([
     Route::post('update-recipe', 'RecipeController@updateRecipe'); //actualizamos la receta
     //favorites
     Route::get('favorites', 'FavoriteController@getFav'); //cogemos las recetas favoritas de X usuario
+    Route::get('favorite-recipe/{id}', 'FavoriteController@setFavorite'); //insertamos receta favorita al usuario
+    Route::get('remove-favorite-recipe/{id}', 'FavoriteController@removeFavorite'); //eliminamos receta favorita al usuario
     //ratings
     Route::get('ratings/{id}', 'RatingController@getRating'); //cogemos las puntuaciones de las recetas
     Route::get('more-rated', 'RatingController@getMoreRated'); //cogemos las recetas más puntuadas
+    Route::post('set-rating', 'RatingController@setRating'); //añadimos la puntuacion del usuario
     //complexities
     Route::get('complexity', 'ComplexityController@getAllComplexity'); //cogemos todas las complejidades
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Rating;
 use App\Recipe;
 
@@ -29,6 +30,11 @@ class RatingController extends Controller {
         return $sum;
     }
 
+    /**
+     * Get more rated recipes
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getMoreRated(Request $request) {
         $recipes = DB::table('ratings')
         ->join('recipes','recipes.id', '=', 'ratings.id_recipe')
@@ -43,5 +49,27 @@ class RatingController extends Controller {
         }
 
         return $recipes;
+    }
+
+    /**
+     * Set recipe rating
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function setRating(Request $request) {
+        $user = auth()->user();
+        $rating = array('id_recipe'=>$request->id, 'id_user'=>$user->id, 'rating'=>$request->rating);
+
+        $ifExistsRating = Rating::where('id_recipe', $request->id)
+                        ->where('id_user', $user->id)
+                        ->get();
+        
+        Log::debug($ifExistsRating);
+
+        if(!$ifExistsRating->isEmpty()) {
+            Rating::where('id_recipe', $request->id)->update(['rating'=>$request->rating]);
+        } else {
+            Rating::create($rating);
+        }
     }
 }

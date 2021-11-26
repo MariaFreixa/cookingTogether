@@ -46,7 +46,7 @@ export class UltimasRecetasComponent implements OnInit {
       this.recipeService.getFav().subscribe((recipesFav) => {
          recipesFav.forEach((recipeFav) => {
           this.recipes.forEach((recipe) => {
-            if(recipe.id == recipeFav.id) {
+            if(recipe.id === recipeFav.id) {
               recipe.userFavorite = true;
             }
           })
@@ -55,10 +55,26 @@ export class UltimasRecetasComponent implements OnInit {
     }
   }
 
-  setFavorite(event : any) {
-    console.log("favorite click");
-    this.recipeService.getFav().subscribe((recipesFav) => {
-      
-    });
+  setFavorite(event : any, accion: string) {
+    if(accion === "fav") {
+      this.recipes.forEach((recipe) => {
+        if(recipe.id == event.target.id && (recipe.userFavorite == undefined || !recipe.userFavorite)) {
+          recipe.userFavorite = true;
+          this.recipeService.setFavorite(event.target.id);
+        }
+      });
+    } else {
+      this.recipes.forEach((recipe) => {
+        if(recipe.id == event.target.id && recipe.userFavorite) {
+          recipe.userFavorite = false;
+          this.recipeService.removeFavorite(event.target.id);
+        }
+      });
+    }
+  }
+
+  setRating(item: any) {
+    console.log(item);
+    this.recipeService.setRating(item).subscribe();
   }
 }

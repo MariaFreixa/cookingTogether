@@ -27,17 +27,24 @@ class FavoriteController extends Controller {
     public function getFav(Request $request) {
         $user = auth()->user();
 
-        $recipes = DB::table('users')
-        ->join('favorites', 'favorites.id_user', '=', 'users.id')
-        ->join('recipes', 'recipes.id_user', '=', 'users.id')
-        ->distinct('recipes.id')
+        $recipes = DB::table('recipes')
+        ->join('favorites', 'favorites.id_recipe', '=', 'recipes.id')
+        ->where('favorites.id_user', '=', $user->id)
         ->get(array('recipes.*'));
-
-        foreach ($recipes as $recipe) {
-            $base64 = base64_encode($recipe->main_image);
-            $recipe->main_image = $base64;
-        }
-        
+                
         return response()->json($recipes);
+    }
+
+    public function setFavorite(Request $request) {
+        $user = auth()->user();
+        $favorite = array('id_recipe'=>$request->id, 'id_user'=>$user->id);
+        Favorite::create($favorite);
+    }
+
+    public function removeFavorite(Request $request) {
+        $user = auth()->user();
+        Favorite::where('id_recipe', $request->id)
+        ->where('id_user', '=', $user->id)
+        ->delete();
     }
 }
