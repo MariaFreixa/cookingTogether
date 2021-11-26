@@ -1,7 +1,7 @@
 <app-header></app-header>
 <div class="container">
-    <form class="custom-form" [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-        <h3 class="h3 mb-3 font-weight-normal text-center">Nueva Receta</h3>
+    <form class="custom-form" [formGroup]="recipeForm" (ngSubmit)="onSubmit()" *ngIf='recipeForm'>
+        <h3 class="h3 mb-3 font-weight-normal text-center">{{title}}</h3>
   
          <!-- Errors -->
         <div *ngIf="errors?.name" class="alert alert-danger mt-3">
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn" type="submit">Crear nueva receta</button>
+        <button class="btn" type="submit">{{subButton}}</button>
     </form>
 </div>
 <app-footer></app-footer>

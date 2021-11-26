@@ -22,7 +22,7 @@ class RecipeController extends Controller {
      * @return void
      */
     public function __construct() {
-    $this->middleware('auth:api', ['except' => ['getRecipeById', 'getLatest', 'getRecipesByCategory']]);
+    $this->middleware('auth:api', ['except' => ['getRecipeById', 'getLatest', 'getRecipesByCategory', 'getFullRecipeById']]);
     }
 
     /**
@@ -39,23 +39,37 @@ class RecipeController extends Controller {
     }
 
     /**
+     * Get full recipe by id.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getFullRecipeById(Request $request) {
+        $recipe = Recipe::findOrFail($request->id);
+        $base64 = base64_encode($recipe->main_image);
+        $recipe->main_image = $base64;
+
+        $ingredients = DB::table('ingredients')->where('id_recipe', '=', $request->id)->get();
+        $steps = DB::table('steps')->where('id_recipe', '=', $request->id)->get();
+
+        return array('recipe'=>$recipe, 'ingredients'=>$ingredients, 'steps'=>$steps);
+    }
+
+    /**
      * Get latest recipes.
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getLatest() {
-        $recipes = Recipe::latest()->take(5)->get();
-
-        foreach ($recipes as $recipe) {
-            $base64 = base64_encode($recipe->main_image);
-            $recipe->main_image = $base64;
-        }
-
-        return $recipes;
+        return Recipe::latest()->take(5)->get();
     }
 
+    /**
+     * Get recipes by category.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getRecipesByCategory(Request $request) {
-        $recipes = DB::table('recipes')->where('id_cateogry', '=', $request->id)->get();
+        $recipes = DB::table('recipes')->where('id_category', '=', $request->id)->get();
 
         foreach ($recipes as $recipe) {
             $base64 = base64_encode($recipe->main_image);
@@ -65,6 +79,11 @@ class RecipeController extends Controller {
         return $recipes;
     }
 
+    /**
+     * Get my recipes
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getMyRecipes(Request $request) {
         $user = auth()->user();
         $recipes = DB::table('recipes')->where('id_user', '=', $user->id)->get();
@@ -77,14 +96,18 @@ class RecipeController extends Controller {
         return $recipes;
     }
 
+    /**
+     * Get create new recipe.
+     *
+     * @return \Illuminate\Http\JsonResponse
+    */
     public function newRecipe(Request $request) {
         $user = auth()->user();
-        $recipe = new Recipe();
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
-            'main_image' => 'required',
-            'diners' => 'required|numeric|min:1|max:12',
+            'name' => 'string|between:2,100',
+            'main_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'diners' => 'numeric|min:1|max:12',
             'video' => 'nullable|string',
             'id_category' => 'numeric|min:1|max:12',
             'id_complexity' => 'numeric|min:1|max:3',
@@ -126,6 +149,67 @@ class RecipeController extends Controller {
             $replace = str_replace('{"step":"', "", $stepsArray[$key]);
             $replace2 = str_replace('"}', "", $replace);
             $step = array('id_recipe'=>$recipeCreate->id, 'step'=>$replace2);
+            
+            Step::create($step);
+        }
+    }
+
+    /**
+     * update recipe.
+     *
+     * @return \Illuminate\Http\JsonResponse
+    */
+    public function updateRecipe(Request $request) {
+        $user = auth()->user();
+        $recipe = Recipe::findOrFail($request->id);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string|between:2,100',
+            'diners' => 'nullable|numeric|min:1|max:12',
+            'video' => 'nullable|string',
+            'id_category' => 'nullable|numeric|min:1|max:12',
+            'id_complexity' => 'nullable|numeric|min:1|max:3',
+            'ingredients' => 'nullable',
+            'steps' => 'nullable'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+
+        if($request->file('main_image') != null) {
+            $files = $request->file('main_image')->getRealPath();
+            $image = file_get_contents($files);
+            $base64 = base64_encode($image);
+            $recipe->main_image = $base64;
+        }
+        
+        $recipe->name = $request->input('name');
+        $recipe->diners = $request->input('diners');
+        $recipe->video = $request->input('video');
+        $recipe->id_category = $request->input('id_category');
+        $recipe->id_complexity = $request->input('id_complexity');
+
+        $recipe->save();
+        Ingredient::where('id_recipe', $recipe->id)->delete();
+        Step::where('id_recipe', $recipe->id)->delete();
+
+        $ingredientsArray = (array_values($request->ingredients));
+
+        foreach ($ingredientsArray as $key => $value) {
+            $replace = str_replace('{"ingredient":"', "", $ingredientsArray[$key]);
+            $replace2 = str_replace('"}', "", $replace);
+            $ingredients = array('id_recipe'=>$recipe->id, 'ingredient'=>$replace2);
+            
+            Ingredient::create($ingredients);
+        }
+
+        $stepsArray = (array_values($request->steps));
+
+        foreach ($request->steps as $key => $value) {
+            $replace = str_replace('{"step":"', "", $stepsArray[$key]);
+            $replace2 = str_replace('"}', "", $replace);
+            $step = array('id_recipe'=>$recipe->id, 'step'=>$replace2);
             
             Step::create($step);
         }

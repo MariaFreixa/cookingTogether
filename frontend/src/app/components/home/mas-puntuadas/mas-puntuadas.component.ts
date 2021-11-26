@@ -33,6 +33,7 @@ export class MasPuntuadasComponent implements OnInit {
       recipes.forEach(element => {
         let objectURL = 'data:image/jpeg;base64,' + element.main_image;
         element.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+
         this.recipeService.getRatings(element.id).subscribe((rating) => {
           element.rating = rating;
         })

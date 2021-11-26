@@ -26,12 +26,19 @@ mat-card img {
     border-radius: 0.5rem;
 }
 
+mat-card-actions {
+    display: inline;
+}
+
 .fa-heart {
     color: red;
-    text-align: right;
+    text-align: left;
+    margin-left: 15px;
 }
 
 ngb-rating {
-    color: #FFC107;
-    font-size: 60px;
+    color: black;
+    font-size: 40px;
+    text-align: right;
+    margin-left: 120px;
 }

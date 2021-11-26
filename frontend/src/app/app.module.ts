@@ -28,8 +28,7 @@ import { CategoriaComponent } from './components/categoria/categoria.component';
 import { CocinaComponent } from './components/cocina/cocina.component';
 import { RecetaComponent } from './components/receta/receta.component';
 import { MasPuntuadasComponent } from './components/home/mas-puntuadas/mas-puntuadas.component';
-import { CrearRecetaComponent } from './components/cocina/crear-receta/crear-receta.component';
-import { EditarRecetaComponent } from './components/cocina/editar-receta/editar-receta.component';
+import { CrearEditarRecetaComponent } from './components/cocina/crear-editar-receta/crear-editar-receta.component';
 import { MisRecetasComponent } from './components/cocina/mis-recetas/mis-recetas.component';
 
 
@@ -48,8 +47,7 @@ import { MisRecetasComponent } from './components/cocina/mis-recetas/mis-recetas
     CocinaComponent,
     RecetaComponent,
     MasPuntuadasComponent,
-    CrearRecetaComponent,
-    EditarRecetaComponent,
+    CrearEditarRecetaComponent,
     MisRecetasComponent
   ],
   imports: [

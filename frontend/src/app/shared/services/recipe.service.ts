@@ -52,4 +52,9 @@ export class RecipeService {
     console.log("service recipe: ",recipe);
     return this.http.post(`http://127.0.0.1:8000/api/auth/new-recipe/`, recipe);
   }
+
+  updateRecipe(recipe: any):Observable<any> {
+    console.log("service recipe: ",recipe);
+    return this.http.post(`http://127.0.0.1:8000/api/auth/update-recipe/`, recipe);
+  }
 }
