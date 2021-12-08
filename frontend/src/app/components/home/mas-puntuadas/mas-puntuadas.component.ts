@@ -55,4 +55,27 @@ export class MasPuntuadasComponent implements OnInit {
       });
     }
   }
+
+  setFavorite(event : any, accion: string) {
+    if(accion === "fav") {
+      this.recipes.forEach((recipe) => {
+        if(recipe.id == event.target.id && (recipe.userFavorite == undefined || !recipe.userFavorite)) {
+          recipe.userFavorite = true;
+          this.recipeService.setFavorite(event.target.id).subscribe();
+        }
+      });
+    } else {
+      this.recipes.forEach((recipe) => {
+        if(recipe.id == event.target.id && recipe.userFavorite) {
+          recipe.userFavorite = false;
+          this.recipeService.removeFavorite(event.target.id).subscribe();
+        }
+      });
+    }
+  }
+
+  onRateChange(event: number, RecipeId:number) {
+    let newRating = {id: RecipeId, rating: event };
+    //if(typeof newRating.rating == "number" && isNaN(newRating.rating) == false) this.recipeService.setRating(newRating).subscribe();
+  }
 }

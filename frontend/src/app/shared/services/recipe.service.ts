@@ -70,7 +70,13 @@ export class RecipeService {
     return this.http.get(`http://127.0.0.1:8000/api/auth/remove-favorite-recipe/${id}`);
   }
 
+  //actualizamos la puntuacion de la receta
   setRating(recipe: any):Observable<any> {
     return this.http.post(`http://127.0.0.1:8000/api/auth/set-rating/`, recipe);
+  }
+
+  //Eliminamos la receta de la BDD
+  removeRecipe(id: any):Observable<any> {
+    return this.http.get(`http://127.0.0.1:8000/api/auth/remove-recipe/${id}`);
   }
 }

@@ -13,9 +13,9 @@
             </p>
         </mat-card-content>
         <mat-card-actions *ngIf='isSignedIn'>
-            <i class="far fa-heart fa-2x" *ngIf='!item.userFavorite'></i>
-            <i class="fas fa-heart fa-2x" *ngIf='item.userFavorite'></i>
+            <i class="far fa-heart fa-2x" *ngIf='!item.userFavorite' (click)='setFavorite($event, "fav")' id='{{item.id}}'></i>
+            <i class="fas fa-heart fa-2x" *ngIf='item.userFavorite' (click)='setFavorite($event, "nofav")' id='{{item.id}}'></i>
         </mat-card-actions>
-        <ngb-rating [max]="5" [(rate)]="item.rating" [readonly]='!isSignedIn'></ngb-rating>
+        <ngb-rating [max]="5" [(rate)]="item.rating" [readonly]='!isSignedIn' (rateChange)="onRateChange($event, item.id)"></ngb-rating>
     </mat-card>
 </div>

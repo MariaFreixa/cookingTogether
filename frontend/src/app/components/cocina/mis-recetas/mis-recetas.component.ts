@@ -1,26 +1,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Recipe } from 'src/app/shared/models/recipe.model';
 import { RecipeService } from 'src/app/shared/services/recipe.service';
 
 @Component({
   selector: 'app-mis-recetas',
   templateUrl: './mis-recetas.component.html',
-  styleUrls: ['./mis-recetas.component.scss']
+  styleUrls: ['./mis-recetas.component.scss'],
+  providers: [NgbModalConfig, NgbModal]
 })
 export class MisRecetasComponent implements OnInit {
   public misRecetas: Recipe[] = [];
   public misRecetasFavoritas: Recipe[] = [];
-  //Tablas
-  public displayedColumns: string[] = ['id', 'name', 'action'];
-  public dataSourceMisRecetas = null;
-  public dataSourceMisRecetasFavoritas = null;
+  public recetaSeleccionada: Recipe;
+  //paginacion
+  pageMisRecetas = 1;
+  pageSizeMisRecetas = 5;
+  collectionSizeMisRecetas: number;
+  pageMisRecetasFavoritas = 1;
+  pageSizeMisRecetasFavoritas = 5;
+  collectionSizeMisRecetasFavoritas: number;
 
-  @ViewChild('paginatorMisReceta') paginatorMisReceta: MatPaginator;
-  @ViewChild('paginatorMisRecetasFavoritas') paginatorMisRecetasFavoritas: MatPaginator;
-
-  constructor(public recipeService: RecipeService) {}
+  constructor(public recipeService: RecipeService, private modalService: NgbModal) {}
 
   ngOnInit(): void { 
     this.getMisRecetas();
@@ -29,21 +30,47 @@ export class MisRecetasComponent implements OnInit {
 
   getMisRecetas() {
     this.recipeService.getMyRecipes().subscribe((recipes) => {
-      this.dataSourceMisRecetas = new MatTableDataSource();  
-      this.dataSourceMisRecetas.data = recipes;
-      this.dataSourceMisRecetas.paginator = this.paginatorMisReceta;
       this.misRecetas = recipes;
+      this.collectionSizeMisRecetas = recipes.length;
       console.log("Mis recetas: ", recipes);
     });
   }
 
   getMisRecetasFavoritas() {
     this.recipeService.getFav().subscribe((recipes) => {
-      this.dataSourceMisRecetasFavoritas = new MatTableDataSource();  
-      this.dataSourceMisRecetasFavoritas.data = recipes;
-      this.dataSourceMisRecetasFavoritas.paginator = this.paginatorMisRecetasFavoritas;
       this.misRecetasFavoritas = recipes;
+      this.collectionSizeMisRecetasFavoritas = recipes.length;
       console.log("mis recetas favoritas: ", recipes);
+    });
+  }
+
+  openModal(content, item) {
+    this.recetaSeleccionada = item;
+    this.modalService.open(content, {backdropClass: 'light-blue-backdrop'});
+  }
+
+  eliminarFavoritos() {
+    this.modalService.dismissAll();
+    this.recipeService.removeFavorite(this.recetaSeleccionada.id).subscribe(data => {
+      var i = this.misRecetasFavoritas.indexOf(this.recetaSeleccionada);
+      if ( i !== -1 ) {
+        this.misRecetasFavoritas.splice( i, 1 );
+      }
+    }, err => {
+        console.log("error: ", err);
+    });
+  }
+
+  eliminarReceta() {
+    console.log("eliminar: ", this.recetaSeleccionada);
+    this.modalService.dismissAll();
+    this.recipeService.removeRecipe(this.recetaSeleccionada.id).subscribe(data => {
+      var i = this.misRecetas.indexOf(this.recetaSeleccionada);
+      if ( i !== -1 ) {
+        this.misRecetas.splice( i, 1 );
+      }
+    }, err => {
+        console.log("error: ", err);
     });
   }
 }

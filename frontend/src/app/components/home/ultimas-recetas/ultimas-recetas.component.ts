@@ -60,21 +60,21 @@ export class UltimasRecetasComponent implements OnInit {
       this.recipes.forEach((recipe) => {
         if(recipe.id == event.target.id && (recipe.userFavorite == undefined || !recipe.userFavorite)) {
           recipe.userFavorite = true;
-          this.recipeService.setFavorite(event.target.id);
+          this.recipeService.setFavorite(event.target.id).subscribe();
         }
       });
     } else {
       this.recipes.forEach((recipe) => {
         if(recipe.id == event.target.id && recipe.userFavorite) {
           recipe.userFavorite = false;
-          this.recipeService.removeFavorite(event.target.id);
+          this.recipeService.removeFavorite(event.target.id).subscribe();
         }
       });
     }
   }
 
-  setRating(item: any) {
-    console.log(item);
-    this.recipeService.setRating(item).subscribe();
+  onRateChange(event: number, RecipeId: number) {
+    let newRating = {id: RecipeId, rating: event };
+    //if(typeof newRating.rating == "number" && isNaN(newRating.rating) == false) this.recipeService.setRating(newRating).subscribe();
   }
 }
