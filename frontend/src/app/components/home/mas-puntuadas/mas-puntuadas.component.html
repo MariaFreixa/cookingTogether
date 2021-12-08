@@ -6,11 +6,9 @@
         </mat-card-header>
         <img mat-card-image [src]="item.image" alt="Foto de la receta {{item.name}}">
         <mat-card-content>
-            <p>
-                Comensales: {{item.diners}}
-                dificultad: {{item.id_complexity}}
-                Categoria: {{item.id_cateogry}}
-            </p>
+            <p>Comensales: {{item.diners}}</p>
+            <p>dificultad: {{item.complexity}}</p>
+            <p>Categoria: {{item.category}}</p>
         </mat-card-content>
         <mat-card-actions *ngIf='isSignedIn'>
             <i class="far fa-heart fa-2x" *ngIf='!item.userFavorite' (click)='setFavorite($event, "fav")' id='{{item.id}}'></i>

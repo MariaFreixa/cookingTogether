@@ -46,11 +46,9 @@ export class CrearEditarRecetaComponent implements OnInit {
 
   getData() {
     this.categoryService.getAllCategories().subscribe((response: Category[]) => {
-      console.log("categories: ", response);
       this.categories = response;
     });
     this.complexityService.getAllComplexity().subscribe((response: Complexity[]) => {
-      console.log("complexity: ", response);
       this.complexity = response;
     });
   }
@@ -102,14 +100,11 @@ export class CrearEditarRecetaComponent implements OnInit {
           'steps': steps,
           'main_image': [response.recipe.main_image]
         });
-  
-        console.log(this.recipeForm);
       });
     }
   }
 
   onImageChange(event) {
-    console.log("event.target.files[0]: ", event.target.files[0]);
     this.selectedImage = event.target.files[0];
   }
 

@@ -47,7 +47,6 @@ export class UserProfileComponent implements OnInit {
     userInfo.append('password_confirmation', this.updateUserForm.value.password_confirmation);
 
     this.authService.updateProfileUser(userInfo).subscribe(response =>  {
-      console.log(response);
       this.cargarAvatar(response.user.avatar);
       },
       error => {

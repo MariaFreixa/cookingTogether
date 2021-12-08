@@ -32,7 +32,6 @@ export class MisRecetasComponent implements OnInit {
     this.recipeService.getMyRecipes().subscribe((recipes) => {
       this.misRecetas = recipes;
       this.collectionSizeMisRecetas = recipes.length;
-      console.log("Mis recetas: ", recipes);
     });
   }
 
@@ -40,7 +39,6 @@ export class MisRecetasComponent implements OnInit {
     this.recipeService.getFav().subscribe((recipes) => {
       this.misRecetasFavoritas = recipes;
       this.collectionSizeMisRecetasFavoritas = recipes.length;
-      console.log("mis recetas favoritas: ", recipes);
     });
   }
 
@@ -53,8 +51,12 @@ export class MisRecetasComponent implements OnInit {
     this.modalService.dismissAll();
     this.recipeService.removeFavorite(this.recetaSeleccionada.id).subscribe(data => {
       var i = this.misRecetasFavoritas.indexOf(this.recetaSeleccionada);
+      var e = this.misRecetas.indexOf(this.recetaSeleccionada);
       if ( i !== -1 ) {
         this.misRecetasFavoritas.splice( i, 1 );
+      }
+      if ( e !== -1 ) {
+        this.misRecetas.splice( e, 1 );
       }
     }, err => {
         console.log("error: ", err);
@@ -62,7 +64,6 @@ export class MisRecetasComponent implements OnInit {
   }
 
   eliminarReceta() {
-    console.log("eliminar: ", this.recetaSeleccionada);
     this.modalService.dismissAll();
     this.recipeService.removeRecipe(this.recetaSeleccionada.id).subscribe(data => {
       var i = this.misRecetas.indexOf(this.recetaSeleccionada);
