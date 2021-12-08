@@ -33,6 +33,7 @@ Route::group([
     Route::get('my-recipes', 'RecipeController@getMyRecipes'); //cogemos las recetas creadas por el usuario X
     Route::post('new-recipe', 'RecipeController@newRecipe'); //insertamos una nueva receta
     Route::post('update-recipe', 'RecipeController@updateRecipe'); //actualizamos la receta
+    Route::get('remove-recipe/{id}', 'RecipeController@removeRecipe'); //eliminamos la receta por id y usuario
     //favorites
     Route::get('favorites', 'FavoriteController@getFav'); //cogemos las recetas favoritas de X usuario
     Route::get('favorite-recipe/{id}', 'FavoriteController@setFavorite'); //insertamos receta favorita al usuario

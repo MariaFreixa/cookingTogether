@@ -11,6 +11,7 @@ use Validator;
 use App\User;
 use App\Recipe;
 use App\Ingredient;
+use App\Favorite;
 use App\Step;
 
 
@@ -69,14 +70,7 @@ class RecipeController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function getRecipesByCategory(Request $request) {
-        $recipes = DB::table('recipes')->where('id_category', '=', $request->id)->get();
-
-        foreach ($recipes as $recipe) {
-            $base64 = base64_encode($recipe->main_image);
-            $recipe->main_image = $base64;
-        }
-
-        return $recipes;
+        return DB::table('recipes')->where('id_category', '=', $request->id)->get();
     }
 
     /**
@@ -86,14 +80,7 @@ class RecipeController extends Controller {
      */
     public function getMyRecipes(Request $request) {
         $user = auth()->user();
-        $recipes = DB::table('recipes')->where('id_user', '=', $user->id)->get();
-
-        foreach ($recipes as $recipe) {
-            $base64 = base64_encode($recipe->main_image);
-            $recipe->main_image = $base64;
-        }
-
-        return $recipes;
+        return DB::table('recipes')->where('id_user', '=', $user->id)->get();
     }
 
     /**
@@ -213,5 +200,23 @@ class RecipeController extends Controller {
             
             Step::create($step);
         }
+    }
+
+    public function removeRecipe(Request $request) {
+        $user = auth()->user();
+
+        Ingredient::where('id_recipe', $request->id)
+        ->delete();
+
+        Step::where('id_recipe', $request->id)
+        ->delete();
+
+        Favorite::where('id_recipe', $request->id)
+        ->where('id_user', '=', $user->id)
+        ->delete();
+
+        Recipe::where('id', $request->id)
+        ->where('id_user', '=', $user->id)
+        ->delete();
     }
 }

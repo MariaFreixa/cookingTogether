@@ -26,8 +26,7 @@ class RatingController extends Controller {
      */
     public function getRating(Request $request) {
         $recipe = $request->id;
-        $sum = DB::table('ratings')->where('id_recipe', '=', $recipe)->avg('rating');
-        return $sum;
+        return  DB::table('ratings')->where('id_recipe', '=', $recipe)->avg('rating');
     }
 
     /**
@@ -42,11 +41,6 @@ class RatingController extends Controller {
         ->orderBy('ratings.id_recipe', 'DESC')
         ->take(5)
         ->get(array('recipes.*'));
-        
-        foreach ($recipes as $recipe) {
-            $base64 = base64_encode($recipe->main_image);
-            $recipe->main_image = $base64;
-        }
 
         return $recipes;
     }
